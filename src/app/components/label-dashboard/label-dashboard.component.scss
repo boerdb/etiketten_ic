@@ -1,0 +1,293 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
+  background-color: var(--ion-background-color, #121212);
+  transition: padding-left 0.3s ease-in-out;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background-color: var(--ion-color-step-50, #1e1e1e);
+  border-right: 1px solid var(--ion-color-step-150, #2a2a2a);
+  color: var(--ion-text-color, #fff);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: fixed; /* Blijft op zijn plek */
+  top: 0;
+  left: 0;
+  z-index: 1020; /* Hoger dan de backdrop en menu-btn */
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--ion-color-step-150, #2a2a2a);
+}
+
+.sidebar-header h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  color: var(--ion-text-color, #fff);
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--ion-color-step-250, #404040);
+  background-color: var(--ion-color-step-100, #2a2a2a);
+  color: var(--ion-text-color, #fff);
+  font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+  color: var(--ion-color-step-600, #888);
+}
+
+.label-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+/* --- PREVIEW AREA --- */
+.preview-area {
+  flex-grow: 1;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Verticaal centreren */
+  margin-left: 320px;
+  transition: margin-left 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.placeholder-text {
+  color: var(--ion-color-step-600, #888);
+  font-style: italic;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* --- Label Card --- */
+.label-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background-color: var(--ion-color-step-100, #2a2a2a);
+  border: 1px solid var(--ion-color-step-250, #404040);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.label-card:hover {
+  background-color: var(--ion-color-step-200, #363636);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.label-card.active {
+  background-color: var(--ion-color-primary-shade, #3a7be0);
+  border-color: var(--ion-color-primary, #4c8dff);
+  color: var(--ion-color-primary-contrast, #fff);
+}
+
+.label-card.active .card-title,
+.label-card.active .card-subtitle {
+  color: var(--ion-color-primary-contrast, #fff);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ion-color-step-850, #e0e0e0);
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: var(--ion-color-step-600, #9e9e9e);
+}
+
+/* --- Print Button --- */
+.print-btn {
+  background-color: var(--ion-color-primary, #4c8dff);
+  color: var(--ion-color-primary-contrast, #fff);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.print-btn:hover {
+  background-color: var(--ion-color-primary-shade, #3a7be0);
+}
+
+/* --- Responsive & Sidebar Toggle --- */
+.menu-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1000; /* Moet onder de backdrop en sidebar vallen */
+  background: var(--ion-color-step-150, #2a2a2a);
+  border: 1px solid var(--ion-color-step-250, #404040);
+  color: var(--ion-text-color, #fff);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-size: 1.5rem; /* Groter icoon */
+  line-height: 40px;
+  text-align: center;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+
+  .app-container.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 1010; /* Onder de sidebar, boven de content */
+  }
+
+  .preview-area {
+    margin-left: 0;
+  }
+}
+
+/* --- HET VISUELE LABEL --- */
+/* Deze styles blijven bewust onveranderd om een realistische weergave van een geprint label te behouden. */
+.label-visual {
+  width: 384px;
+  background: white;
+  padding: 4px;
+  color: black;
+  font-family: Arial, sans-serif;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  flex-shrink: 0; /* Voorkom dat het krimpt */
+}
+
+.label-border {
+  border: 2px solid black;
+  outline: 1px solid black;
+  outline-offset: -6px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+}
+
+.label-row-top {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.label-title-svg {
+  width: 100%;
+  height: 60px; /* Biedt voldoende ruimte voor de tekst */
+}
+
+.label-title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  fill: black; /* Gebruik 'fill' voor SVG tekstkleur */
+  font-family: Arial, sans-serif;
+}
+
+.dosage-line {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 2px;
+
+  .label-total-dose {
+    font-size: 1.7rem;
+    font-weight: 800;
+  }
+
+  .label-concentration {
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-style: italic;
+  }
+}
+
+.label-row-middle {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 10px;
+
+  .col { display: flex; flex-direction: column; gap: 4px; }
+  .text-right { text-align: right; }
+}
+
+.data-text {
+  font-size: 0.9rem;
+}
+
+.line {
+  border-bottom: 1px solid black;
+  display: inline-block;
+  min-width: 70px;
+  height: 14px;
+}
+
+.label-row-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  border-top: 1px dashed #ccc;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}

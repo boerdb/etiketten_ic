@@ -1,0 +1,73 @@
+<div class="app-container" [class.sidebar-open]="isSidebarOpen()">
+
+  <button class="menu-btn" (click)="toggleSidebar()">&#9776;</button>
+
+  @if (isSidebarOpen()) {
+    <div class="sidebar-backdrop" (click)="toggleSidebar()"></div>
+  }
+
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3>IC Labels</h3>
+      <input type="text" placeholder="Zoek medicatie..." (input)="updateSearch($event)" class="search-input">
+    </div>
+    <div class="label-list">
+      @for (label of filteredLabels(); track label.id) {
+        <button class="label-card" [class.active]="label.id === activeLabel()?.id" (click)="onSelect(label.id)">
+          <div class="card-title">{{ label.title }}</div>
+          <div class="card-subtitle">{{ label.category }}</div>
+        </button>
+      }
+    </div>
+  </aside>
+
+  <main class="preview-area">
+    @if (activeLabel(); as label) {
+      <div class="preview-container">
+
+        <div class="label-visual" id="label-to-print">
+          <div class="label-border">
+
+            <div class="label-row-top">
+              <svg viewBox="0 0 360 50" class="label-title-svg">
+                <text class="label-title" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" lengthAdjust="spacingAndGlyphs" textLength="350">{{ label.title }}</text>
+              </svg>
+              <div class="dosage-line">
+                <span class="label-total-dose">
+                  {{ label.total_dose }} {{ label.unit }} / {{ label.total_ml }} ml
+                </span>
+                <span class="label-concentration">
+                  ({{ label.concentration_label }})
+                </span>
+              </div>
+            </div>
+
+            <div class="label-row-middle">
+              <div class="col">
+                <div>Batch: <span class="line"></span></div>
+                <div>THT: <span class="data-text">{{ thtDate }}</span></div>
+              </div>
+              <div class="col text-right">
+                <div>Tijd: <span class="data-text">{{ currentTime }}</span></div>
+                <div>Datum: <span class="data-text">{{ currentDate }}</span></div>
+              </div>
+            </div>
+
+            <div class="label-row-bottom">
+              <div>Paraaf 1: <span class="line"></span></div>
+              <div>Paraaf 2: <span class="line"></span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="print-btn" (click)="boemPrinten()">
+          <span>🖨️ Boem, Printen</span>
+        </button>
+
+      </div>
+    } @else {
+      <div class="placeholder-text">Selecteer medicatie in de lijst</div>
+    }
+  </main>
+</div>
