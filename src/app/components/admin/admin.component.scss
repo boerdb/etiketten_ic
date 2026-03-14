@@ -1,0 +1,199 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #121212;
+  box-sizing: border-box;
+  color: white;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-wrapper {
+  padding: 15px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-card, .list-card {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+// Formulier styling
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  @media (max-width: 600px) { flex-direction: column; }
+
+  .input-group { flex: 1; }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  label { font-size: 0.8rem; color: #2196f3; font-weight: bold; text-transform: uppercase; }
+  input {
+    width: 100%;
+    padding: 12px;
+    background: #2c2c2c;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    &:focus { border-color: #2196f3; outline: none; background: #333; }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  button {
+    flex: 1; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none;
+    &.btn-save { background: #2196f3; color: white; }
+    &.btn-cancel { background: #333; color: #aaa; }
+  }
+}
+
+/* DE TABEL MET MOOIE LIJNTJES EN VERTICALE ACTIONS */
+.list-card {
+  background: #1e1e1e;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  margin-top: 20px;
+
+  h3 {
+    text-align: center; // DIT CENTREERT DE TITEL
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #ffffff;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+    text-transform: none; // Of uppercase als je het strakker wilt
+  }
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    color: #aaa; // Iets lichter grijs voor de headers
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 10px 5px;
+    border-bottom: 1px solid #444;
+  }
+  }
+
+  // ... rest van de tabel styling die we eerder hebben opgezet ...
+
+
+  tr {
+    border-bottom: 1px solid #2d2d2d; // De mooie scheidingslijntjes
+  }
+
+  td {
+    padding: 15px 5px;
+    vertical-align: top;
+  }
+
+  .col-med {
+    .title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 12px;
+
+      button {
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        &.edit { color: #2196f3; }
+        &.delete { color: #777; }
+        &:hover { text-decoration: underline; }
+      }
+    }
+  }
+
+  .col-cat {
+    .cat-tag {
+      font-size: 0.8rem;
+      color: #aaa;
+      background: #2a2a2a;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+  }
+
+  .col-dose {
+    .dose-val { font-weight: 600; color: #fff; }
+    .vol-val { font-size: 0.85rem; color: #666; }
+  }
+
+  .text-right { text-align: right; }
+
+
+// Kleine optimalisatie voor smalle telefoons
+@media (max-width: 480px) {
+  .admin-table {
+    .col-cat {
+      // Op hele kleine schermen mag de categorie iets kleiner of subtieler
+      padding-top: 18px; // Uitlijnen met de titel
+      .cat-tag { background: transparent; padding: 0; }
+    }
+  }
+}
+
+
+
+.custom-select {
+  width: 100%;
+  padding: 12px;
+  background: #2c2c2c; // Zelfde als je inputs
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  appearance: none; // Verwijdert de standaard browser-styling
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232196f3%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px top 50%;
+  background-size: 12px auto;
+
+  &:focus {
+    border-color: #2196f3;
+    outline: none;
+  }
+
+  option {
+    background: #1e1e1e;
+    color: white;
+  }
+}

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { LabelDashboardComponent } from './components/label-dashboard/label-dashboard.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [LabelDashboardComponent], // Zorg dat deze hier staat!
-  template: '<app-label-dashboard></app-label-dashboard>', // We zetten de HTML direct hier, dat is makkelijker
+  imports: [RouterOutlet], // RouterOutlet is nodig om routes te renderen
+  template: '<router-outlet></router-outlet>', // De router bepaalt wat hier komt
   styles: [`
     :host {
       display: block;
@@ -15,6 +15,6 @@ import { LabelDashboardComponent } from './components/label-dashboard/label-dash
   `]
 })
 export class AppComponent {
-  // De AppComponent hoeft zelf geen logica meer te hebben,
-  // want alles zit nu in de LabelDashboardComponent
+  // De AppComponent is nu alleen een 'shell' voor de router.
+  // De logica zit in de componenten die door de router worden geladen.
 }

@@ -1,3 +1,121 @@
-<p>
-  admin works!
-</p>
+<div class="admin-wrapper">
+  <div class="admin-card">
+    <h2 style="text-align: center;">{{ isEditing() ? 'Etiket Bewerken' : 'Nieuw Etiket Toevoegen' }}</h2>
+    <div class="admin-header" style="margin-bottom: 20px;">
+  <button routerLink="/" class="back-btn" style="background: transparent; color: #2196f3; border: 1px solid #2196f3; padding: 8px 15px; border-radius: 6px; cursor: pointer;">
+    ⬅️ Terug naar Printen
+  </button>
+</div>
+
+    <div class="form-grid">
+      <div class="input-group full">
+        <label>Medicatienaam</label>
+        <input [(ngModel)]="formData.title" placeholder="bv. Norepinefrine">
+      </div>
+
+  <div class="input-group">
+  <label>Categorie</label>
+  <select [(ngModel)]="formData.category"
+          name="category"
+          class="custom-select"
+          aria-label="Selecteer een categorie voor het etiket"
+          (change)="updateConcentration()"> <option [ngValue]="''" disabled>Kies een categorie...</option>
+    <option value="Analgesie">Analgesie</option>
+    <option value="Anticoagulantia">Anticoagulantia</option>
+    <option value="Inotropie">Inotropie</option>
+    <option value="Sedatie">Sedatie</option>
+    <option value="Anders">-- Handmatig invoeren --</option>
+  </select>
+</div>
+
+<div class="input-group" *ngIf="formData.category === 'Anders'">
+  <label>Handmatige Categorie</label>
+  <input type="text"
+         [(ngModel)]="customCategory"
+         name="customCategory"
+         placeholder="Voer nieuwe categorie in..."
+         (input)="onCustomCategoryChange()">
+</div>
+
+<div class="input-group" *ngIf="formData.category === 'Anders'">
+  <label>Nieuwe Categorie Naam</label>
+  <input type="text" [(ngModel)]="customCategory" placeholder="Voer categorie in..." (input)="onCustomCategoryChange()">
+</div>
+
+     <div class="input-row">
+  <div class="input-group">
+    <label>Totaal Dosis</label>
+    <input type="number"
+           [(ngModel)]="formData.total_dose"
+           (input)="updateConcentration()"
+           placeholder="bv. 500">
+  </div>
+
+  <div class="input-group">
+    <label>Eenheid</label>
+    <input type="text"
+           [(ngModel)]="formData.unit"
+           (input)="updateConcentration()"
+           placeholder="mg, mcg, IE">
+  </div>
+
+  <div class="input-group">
+    <label>Volume (ml)</label>
+    <input type="number"
+           [(ngModel)]="formData.total_ml"
+           (input)="updateConcentration()"
+           placeholder="bv. 50">
+  </div>
+</div>
+
+<div class="input-group full">
+  <label>Concentratie Tekst (tussen haakjes)</label>
+  <input type="text"
+         [(ngModel)]="formData.concentration_label"
+         placeholder="Wordt automatisch berekend...">
+</div>
+
+      <div class="actions">
+        <button class="btn-save" (click)="save()">
+          {{ isEditing() ? 'Wijzigingen Opslaan' : 'Toevoegen aan MariaDB' }}
+        </button>
+        <button *ngIf="isEditing()" class="btn-cancel" (click)="cancelEdit()">Annuleren</button>
+      </div>
+    </div>
+  </div>
+
+<div class="list-card">
+  <h3>Beheer Bestaande Etiketten</h3>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Medicatie & Acties</th>
+        <th>Categorie</th>
+        <th class="text-right">Dosis / Vol</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (label of labelService.labels(); track label.id) {
+        <tr>
+          <td class="col-med">
+            <div class="title">{{ label.title }}</div>
+            <div class="row-actions">
+              <button class="edit" (click)="editLabel(label)">✏️ Bewerken</button>
+              <button class="delete" (click)="label.id && deleteLabel(label.id)">🗑️ Wissen</button>
+            </div>
+          </td>
+
+          <td class="col-cat">
+            <span class="cat-tag">{{ label.category }}</span>
+          </td>
+
+          <td class="col-dose text-right">
+            <div class="dose-val">{{ label.total_dose }}{{ label.unit }}</div>
+            <div class="vol-val">{{ label.total_ml }}ml</div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

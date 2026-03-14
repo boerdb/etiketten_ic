@@ -1,16 +1,17 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core'; // OnInit toegevoegd
 import { CommonModule } from '@angular/common';
 import { LabelService } from '../../services/label';
 import { PhomemoM110Service } from 'src/app/services/phomemo-m110';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-label-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './label-dashboard.component.html',
   styleUrls: ['./label-dashboard.component.scss']
 })
-export class LabelDashboardComponent {
+export class LabelDashboardComponent implements OnInit { // OnInit geïmplementeerd
   // Services
   labelService = inject(LabelService);
   private printerService = inject(PhomemoM110Service);
@@ -18,11 +19,17 @@ export class LabelDashboardComponent {
   // UI State
   isSidebarOpen = signal(false);
 
-  // Data van de service
+  // Data koppeling met de service
   activeLabel = this.labelService.activeLabel;
   filteredLabels = this.labelService.filteredLabels;
 
-  onSelect(id: string) {
+  ngOnInit() {
+    // Cruciaal: haal de labels op bij het starten van de app
+    this.labelService.loadLabels();
+  }
+
+  // Type veranderd naar number voor MariaDB compatibiliteit
+  onSelect(id: number) {
     this.labelService.selectLabel(id);
     this.isSidebarOpen.set(false);
   }
@@ -32,7 +39,7 @@ export class LabelDashboardComponent {
     this.labelService.searchTerm.set(input.value);
   }
 
-  // Dynamische datums
+  // --- Dynamische datums (Getters) ---
   get currentTime(): string {
     return new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
   }
@@ -44,21 +51,25 @@ export class LabelDashboardComponent {
   get thtDate(): string {
     const date = new Date();
     date.setHours(date.getHours() + 24);
-    return date.toLocaleString('nl-NL', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleString('nl-NL', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
   }
 
   toggleSidebar() {
     this.isSidebarOpen.update(open => !open);
   }
 
-  async boemPrinten() {
-    const labelElement = document.getElementById('label-to-print') as any;
-    if (labelElement) {
-      try {
-        await this.printerService.printLiggendLabel(labelElement);
-      } catch (err) {
-        alert('Printer niet gevonden of verbinding mislukt');
-      }
+ async boemPrinten() {
+  const labelElement = document.getElementById('label-to-print');
+  if (labelElement) {
+    try {
+      // Geen 'as any' nodig, de service accepteert nu de div!
+      await this.printerService.printLiggendLabel(labelElement);
+    } catch (err) {
+      alert('Printen mislukt. Controleer bluetooth verbinding.');
     }
   }
+}
 }

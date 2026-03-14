@@ -241,23 +241,26 @@
   font-family: Arial, sans-serif;
 }
 
-.dosage-line {
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  gap: 6px;
+.dosage-line-svg {
+  width: 100%;
+  height: 30px;
   margin-top: 2px;
+}
 
-  .label-total-dose {
-    font-size: 1.7rem;
-    font-weight: 800;
-  }
+.dosage-text-container {
+  font-family: Arial, sans-serif;
+  fill: black;
+}
 
-  .label-concentration {
-    font-size: 1.1rem;
-    font-weight: 700;
-    font-style: italic;
-  }
+.label-total-dose-svg {
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.label-concentration-svg {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-style: italic;
 }
 
 .label-row-middle {
@@ -290,4 +293,51 @@
   padding-top: 10px;
   font-weight: bold;
   font-size: 0.9rem;
+}
+
+
+
+
+
+.sidebar {
+  display: flex;
+  flex-direction: column; // Zorgt dat header, list en footer onder elkaar staan
+  height: 100vh;
+
+  .label-list {
+    flex: 1; // Neemt alle beschikbare ruimte in, zodat de footer naar beneden wordt gedrukt
+    overflow-y: auto; // Alleen de lijst is scrollbaar
+  }
+
+  .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #333;
+    background-color: #1e1e1e; // Zelfde kleur als sidebar
+
+    .admin-nav-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #333;
+      color: #aaa; // Iets subtieler dan de rest
+      border: 1px solid #444;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #444;
+        color: #2196f3; // Kleuraccent bij hover
+        border-color: #2196f3;
+      }
+
+      span {
+        font-size: 1.2rem;
+      }
+    }
+  }
 }
