@@ -42,9 +42,9 @@ export class LabelService {
     this.http.get<LabelTemplate[]>(this.apiUrl).subscribe(data => {
       this.labels.set(data);
       // Selecteer automatisch de eerste als er nog niets geselecteerd is
-      if (!this.activeLabelId() && data.length > 0) {
-        this.activeLabelId.set(data[0].id || null);
-      }
+      // if (!this.activeLabelId() && data.length > 0) {
+      //   this.activeLabelId.set(data[0].id || null);
+      // }
     });
   }
 

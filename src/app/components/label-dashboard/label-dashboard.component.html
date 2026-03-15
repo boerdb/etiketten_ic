@@ -68,12 +68,15 @@
         </div>
 
         <button class="print-btn" (click)="boemPrinten()">
-          <span>🖨️ Boem, Printen</span>
+          <span>🖨️ Print Label</span>
         </button>
 
       </div>
     } @else {
-      <div class="placeholder-text">Selecteer medicatie in de lijst</div>
+      <div class="placeholder-container">
+        <img src="assets/images/braun.png" alt="Perfusor" class="placeholder-image">
+        <p class="placeholder-text">Selecteer medicatie in de lijst</p>
+      </div>
     }
   </main>
 </div>

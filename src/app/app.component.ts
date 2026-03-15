@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { registerIcons } from './utils/icon-registry';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,9 @@ import { RouterOutlet } from '@angular/router';
   `]
 })
 export class AppComponent {
+  ngOnInit() {
+    registerIcons(); // Hier worden alle iconen in het geheugen geladen
+  }
   // De AppComponent is nu alleen een 'shell' voor de router.
   // De logica zit in de componenten die door de router worden geladen.
 }

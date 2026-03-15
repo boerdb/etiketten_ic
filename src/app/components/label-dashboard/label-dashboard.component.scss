@@ -79,10 +79,9 @@
 }
 
 .placeholder-text {
-  color: var(--ion-color-step-600, #888);
-  font-style: italic;
-  font-size: 1.2rem;
-  text-align: center;
+  color: var(--ion-color-step-700, #a0a0a0);
+  font-size: 1.1rem;
+  max-width: 300px;
 }
 
 /* --- Label Card --- */
@@ -295,10 +294,6 @@
   font-size: 0.9rem;
 }
 
-
-
-
-
 .sidebar {
   display: flex;
   flex-direction: column; // Zorgt dat header, list en footer onder elkaar staan
@@ -340,4 +335,21 @@
       }
     }
   }
+}
+
+.placeholder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  height: 100%;
+}
+
+.placeholder-image {
+  max-width: 80%;
+  max-height: 300px;
+  border-radius: 12px;
+  opacity: 0.7;
 }

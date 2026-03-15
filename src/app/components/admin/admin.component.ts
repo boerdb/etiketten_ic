@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LabelService, LabelTemplate } from '../../services/label';
 import { RouterLink } from '@angular/router';
+import { IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [IonIcon, CommonModule, FormsModule, RouterLink],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
