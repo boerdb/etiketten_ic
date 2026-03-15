@@ -62,18 +62,18 @@ export class LabelDashboardComponent implements OnInit {
     this.categoryState.update(currentMap => {
       const wasOpen = !!currentMap.get(category);
       const newMap = new Map<string, boolean>();
-      
+
       // Als de geklikte categorie nog niet open was, open deze dan.
       // Alle andere categorieën worden automatisch gesloten omdat we een nieuwe map gebruiken.
       if (!wasOpen) {
         newMap.set(category, true);
       }
-      
+
       // Als de categorie al open was, zal de nieuwe (lege) map ervoor zorgen dat deze sluit.
       return newMap;
     });
   }
-  
+
   // Type veranderd naar number voor MariaDB compatibiliteit
   onSelect(id: number) {
     this.labelService.selectLabel(id);
