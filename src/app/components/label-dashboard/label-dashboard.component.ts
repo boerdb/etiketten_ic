@@ -1,8 +1,14 @@
-import { Component, inject, signal, OnInit } from '@angular/core'; // OnInit toegevoegd
+import { Component, inject, signal, OnInit, computed } from '@angular/core'; // computed toegevoegd
 import { CommonModule } from '@angular/common';
-import { LabelService } from '../../services/label';
+import { LabelService, LabelTemplate } from '../../services/label'; // LabelTemplate geïmporteerd
 import { PhomemoM110Service } from 'src/app/services/phomemo-m110';
 import { RouterLink } from '@angular/router';
+
+// Interface voor de gegroepeerde data
+export interface LabelGroup {
+  category: string;
+  labels: LabelTemplate[];
+}
 
 @Component({
   selector: 'app-label-dashboard',
@@ -11,23 +17,63 @@ import { RouterLink } from '@angular/router';
   templateUrl: './label-dashboard.component.html',
   styleUrls: ['./label-dashboard.component.scss']
 })
-export class LabelDashboardComponent implements OnInit { // OnInit geïmplementeerd
+export class LabelDashboardComponent implements OnInit {
   // Services
   labelService = inject(LabelService);
   private printerService = inject(PhomemoM110Service);
 
   // UI State
   isSidebarOpen = signal(false);
+  categoryState = signal<Map<string, boolean>>(new Map()); // Map voor open/dicht state
 
-  // Data koppeling met de service
+  // Data
   activeLabel = this.labelService.activeLabel;
-  filteredLabels = this.labelService.filteredLabels;
+  private filteredLabels = this.labelService.filteredLabels; // DEZE GEBRUIKEN!
+
+  // Computed property om labels te groeperen op basis van de al gefilterde lijst
+  groupedLabels = computed(() => {
+    const filtered = this.filteredLabels();
+
+    // Groepeer de gefilterde labels
+    const groups: { [key: string]: LabelTemplate[] } = filtered.reduce((acc, label) => {
+      const { category } = label;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(label);
+      return acc;
+    }, {} as { [key: string]: LabelTemplate[] });
+
+    // Converteer naar een array en sorteer
+    return Object.keys(groups)
+      .sort() // Sorteer de categorieën alfabetisch
+      .map(category => ({
+        category,
+        labels: groups[category].sort((a, b) => a.title.localeCompare(b.title)) // Sorteer labels binnen de groep
+      }));
+  });
 
   ngOnInit() {
-    // Cruciaal: haal de labels op bij het starten van de app
     this.labelService.loadLabels();
   }
 
+  // Categorie open/dicht zetten (accordion style)
+  toggleCategory(category: string) {
+    this.categoryState.update(currentMap => {
+      const wasOpen = !!currentMap.get(category);
+      const newMap = new Map<string, boolean>();
+      
+      // Als de geklikte categorie nog niet open was, open deze dan.
+      // Alle andere categorieën worden automatisch gesloten omdat we een nieuwe map gebruiken.
+      if (!wasOpen) {
+        newMap.set(category, true);
+      }
+      
+      // Als de categorie al open was, zal de nieuwe (lege) map ervoor zorgen dat deze sluit.
+      return newMap;
+    });
+  }
+  
   // Type veranderd naar number voor MariaDB compatibiliteit
   onSelect(id: number) {
     this.labelService.selectLabel(id);

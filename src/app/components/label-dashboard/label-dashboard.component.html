@@ -16,13 +16,26 @@
   </div>
 
   <div class="label-list">
-    @for (label of filteredLabels(); track label.id) {
-      <button class="label-card"
-        [class.active]="label.id === activeLabel()?.id"
-        (click)="label.id && onSelect(label.id)">
-  <div class="card-title">{{ label.title }}</div>
-  <div class="card-subtitle">{{ label.category }}</div>
-</button>
+    @for (group of groupedLabels(); track group.category) {
+      <div class="category-group">
+        <button class="category-header" (click)="toggleCategory(group.category)">
+          <span class="category-title">{{ group.category }}</span>
+          <span class="category-toggle-icon" [class.open]="categoryState().get(group.category)">&#9654;</span>
+        </button>
+
+        @if (categoryState().get(group.category)) {
+          <div class="category-content">
+            @for (label of group.labels; track label.id) {
+              <button class="label-card"
+                [class.active]="label.id === activeLabel()?.id"
+                (click)="label.id && onSelect(label.id)">
+                <div class="card-title">{{ label.title }}</div>
+                <div class="card-subtitle">{{ label.category }}</div>
+              </button>
+            }
+          </div>
+        }
+      </div>
     }
   </div>
 
