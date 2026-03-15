@@ -34,6 +34,11 @@ export class LabelDashboardComponent implements OnInit { // OnInit geïmplemente
     this.isSidebarOpen.set(false);
   }
 
+  goHome() {
+    this.labelService.deselectLabel();
+    this.isSidebarOpen.set(false);
+  }
+
   updateSearch(event: Event) {
     const input = event.target as HTMLInputElement;
     this.labelService.searchTerm.set(input.value);

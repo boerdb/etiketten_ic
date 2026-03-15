@@ -8,7 +8,10 @@
 
  <aside class="sidebar">
   <div class="sidebar-header">
-    <h3>IC Labels</h3>
+    <div class="sidebar-title-bar">
+      <h3>IC Labels</h3>
+      <button class="home-btn" (click)="goHome()" title="Naar startscherm">🏠</button>
+    </div>
     <input type="text" placeholder="Zoek medicatie..." (input)="updateSearch($event)" class="search-input">
   </div>
 
@@ -74,8 +77,12 @@
       </div>
     } @else {
       <div class="placeholder-container">
-        <img src="assets/images/braun.png" alt="Perfusor" class="placeholder-image">
-        <p class="placeholder-text">Selecteer medicatie in de lijst</p>
+        <h1 class="landing-title">IC LabelMaster</h1>
+        <p class="placeholder-text">Selecteer medicatie in de lijst om een label te genereren</p>
+        <div class="landing-footer">
+          &copy; 2026 ontwikkeld door Clinical Vision <br>
+          Versie 1.01 (Build mrt-2026)
+        </div>
       </div>
     }
   </main>

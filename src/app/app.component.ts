@@ -12,6 +12,22 @@ import { registerIcons } from './utils/icon-registry';
       display: block;
       height: 100vh;
       margin: 0;
+      position: relative;
+      isolation: isolate;
+    }
+
+    :host::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/assets/images/medication.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: blur(10px) brightness(0.5);
+      z-index: -1;
     }
   `]
 })

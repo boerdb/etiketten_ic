@@ -52,6 +52,10 @@ export class LabelService {
     this.activeLabelId.set(id);
   }
 
+  deselectLabel() {
+    this.activeLabelId.set(null);
+  }
+
   saveLabel(label: Partial<LabelTemplate>): Observable<any> {
     return this.http.post(this.apiUrl, label);
   }
