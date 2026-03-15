@@ -60,7 +60,7 @@ export class AdminComponent implements OnInit {
       const conc = dosis / ml;
       // Formatteer naar max 2 decimalen, vervang punt door komma (NL stijl)
       const formattedConc = conc.toFixed(2).replace('.', ',').replace(',00', '');
-      this.formData.concentration_label = `(${formattedConc} ${unit} / ml)`;
+      this.formData.concentration_label = `${formattedConc} ${unit} / ml`;
     } else {
       this.formData.concentration_label = '';
     }
