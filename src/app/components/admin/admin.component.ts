@@ -131,7 +131,7 @@ export class AdminComponent implements OnInit {
         this.labelService.loadLabels();
         this.resetForm();
         this.isEditing.set(false);
-        alert('Opgeslagen in MariaDB!');
+        alert('Etiket opgeslagen!');
       },
       error: (err) => {
         console.error('Fout bij opslaan:', err);
