@@ -1,0 +1,13 @@
+@if (visible()) {
+  <div class="install-banner" role="complementary" aria-label="App installeren">
+    <div class="install-icon">📲</div>
+    <div class="install-text">
+      <strong>Installeer IC LabelMaster</strong>
+      <span>Voeg toe aan je startscherm voor snelle toegang</span>
+    </div>
+    <div class="install-actions">
+      <button class="btn-install" (click)="install()">Installeren</button>
+      <button class="btn-dismiss" (click)="dismiss()" aria-label="Sluiten">✕</button>
+    </div>
+  </div>
+}

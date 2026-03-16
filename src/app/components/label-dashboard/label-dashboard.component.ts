@@ -28,7 +28,8 @@ export class LabelDashboardComponent implements OnInit {
 
   // Data
   activeLabel = this.labelService.activeLabel;
-  private filteredLabels = this.labelService.filteredLabels; // DEZE GEBRUIKEN!
+  searchTerm = this.labelService.searchTerm;
+  filteredLabels = this.labelService.filteredLabels;
 
   // Computed property om labels te groeperen op basis van de al gefilterde lijst
   groupedLabels = computed(() => {

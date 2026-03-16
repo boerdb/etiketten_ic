@@ -1,12 +1,18 @@
+import { UpdateNotificationComponent } from './components/update-notification/update-notification.component';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { registerIcons } from './utils/icon-registry';
+import { PwaInstallPromptComponent } from './components/pwa-install-prompt/pwa-install-prompt.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet], // RouterOutlet is nodig om routes te renderen
-  template: '<router-outlet></router-outlet>', // De router bepaalt wat hier komt
+  imports: [RouterOutlet, PwaInstallPromptComponent, UpdateNotificationComponent],
+  template: `
+    <router-outlet></router-outlet>
+    <app-pwa-install-prompt></app-pwa-install-prompt>
+    <app-update-notification></app-update-notification>
+  `,
   styles: [`
     :host {
       display: block;
