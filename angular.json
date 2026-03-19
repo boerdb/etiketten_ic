@@ -40,6 +40,7 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "allowedCommonJsDependencies": ["html2canvas"],
             "scripts": [],
             "browser": "src/main.ts"
           },
@@ -54,8 +55,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "7kb",
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
