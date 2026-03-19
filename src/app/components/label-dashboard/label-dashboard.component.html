@@ -23,7 +23,6 @@
           [class.active]="label.id === activeLabel()?.id"
           (click)="label.id && onSelect(label.id)">
           <div class="card-title">{{ label.title }}</div>
-          <div class="card-subtitle">{{ label.category }}</div>
         </button>
       }
     } @else {
@@ -42,7 +41,6 @@
                   [class.active]="label.id === activeLabel()?.id"
                   (click)="label.id && onSelect(label.id)">
                   <div class="card-title">{{ label.title }}</div>
-                  <div class="card-subtitle">{{ label.category }}</div>
                 </button>
               }
             </div>

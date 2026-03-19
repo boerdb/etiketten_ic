@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core'; // computed toegevoegd
 import { CommonModule } from '@angular/common';
 import { LabelService, LabelTemplate } from '../../services/label'; // LabelTemplate geïmporteerd
-import { PhomemoM110Service } from 'src/app/services/phomemo-m110';
+import { AndroidPrinterService } from 'src/app/services/android-printer';
 import { RouterLink } from '@angular/router';
 
 // Interface voor de gegroepeerde data
@@ -20,7 +20,7 @@ export interface LabelGroup {
 export class LabelDashboardComponent implements OnInit {
   // Services
   labelService = inject(LabelService);
-  private printerService = inject(PhomemoM110Service);
+  private printerService = inject(AndroidPrinterService);
 
   // UI State
   isSidebarOpen = signal(false);
@@ -117,10 +117,9 @@ export class LabelDashboardComponent implements OnInit {
   const labelElement = document.getElementById('label-to-print');
   if (labelElement) {
     try {
-      // Geen 'as any' nodig, de service accepteert nu de div!
-      await this.printerService.printLiggendLabel(labelElement);
+      await this.printerService.printLabelElement(labelElement);
     } catch (err) {
-      alert('Printen mislukt. Controleer bluetooth verbinding.');
+      alert('Printen mislukt. Controleer de Android printerservice en wifi-verbinding.');
     }
   }
 }
