@@ -110,7 +110,7 @@
         </div>
         <p class="print-note">{{ printerTargetDescription }}</p>
 
-        @if (isNativeAndroidRuntime && isBrotherPluginLoaded) {
+        @if (showBrotherDiagnostics && isNativeAndroidRuntime && isBrotherPluginLoaded) {
           <div class="runtime-status">
             <div class="runtime-status-line">
               <strong>Bluetooth tools:</strong>

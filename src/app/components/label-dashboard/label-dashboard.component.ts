@@ -4,6 +4,7 @@ import { LabelService, LabelTemplate } from '../../services/label'; // LabelTemp
 import { AndroidPrinterService } from 'src/app/services/android-printer';
 import { RouterLink } from '@angular/router';
 import { BRLMChannelResult } from '@rdlabo/capacitor-brotherprint';
+import { environment } from 'src/environments/environment';
 
 // Interface voor de gegroepeerde data
 export interface LabelGroup {
@@ -37,6 +38,10 @@ export class LabelDashboardComponent implements OnInit {
 
   get runtimePrinterStatusMessage(): string {
     return this.printerService.getRuntimeStatusMessage();
+  }
+
+  get showBrotherDiagnostics(): boolean {
+    return environment.showBrotherDiagnostics;
   }
 
   discoveredPrinters = signal<BRLMChannelResult[]>([]);
