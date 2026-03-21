@@ -2,18 +2,19 @@ import { Component, inject, signal, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LabelService, LabelTemplate } from '../../services/label';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [IonIcon, CommonModule, FormsModule, RouterLink],
+  imports: [IonIcon, CommonModule, FormsModule],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
   labelService = inject(LabelService);
+  private router = inject(Router);
 
   // Standaardwaarden voor een leeg formulier
   private readonly defaultForm: Partial<LabelTemplate> = {
@@ -111,6 +112,10 @@ export class AdminComponent implements OnInit {
   resetForm() {
     this.formData = { ...this.defaultForm };
     this.customCategory = '';
+  }
+
+  async goBackToDashboard() {
+    await this.router.navigate(['/']);
   }
 
   save() {

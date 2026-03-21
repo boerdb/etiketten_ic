@@ -2,7 +2,7 @@ import { Component, inject, signal, OnInit, computed } from '@angular/core'; // 
 import { CommonModule } from '@angular/common';
 import { LabelService, LabelTemplate } from '../../services/label'; // LabelTemplate geïmporteerd
 import { AndroidPrinterService } from 'src/app/services/android-printer';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { BRLMChannelResult } from '@rdlabo/capacitor-brotherprint';
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +15,7 @@ export interface LabelGroup {
 @Component({
   selector: 'app-label-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './label-dashboard.component.html',
   styleUrls: ['./label-dashboard.component.scss']
 })
@@ -23,6 +23,7 @@ export class LabelDashboardComponent implements OnInit {
   // Services
   labelService = inject(LabelService);
   private printerService = inject(AndroidPrinterService);
+  private router = inject(Router);
 
   get printerTargetDescription(): string {
     return this.printerService.getPrinterTargetDescription();
@@ -111,6 +112,11 @@ export class LabelDashboardComponent implements OnInit {
   goHome() {
     this.labelService.deselectLabel();
     this.isSidebarOpen.set(false);
+  }
+
+  async goToAdmin() {
+    this.isSidebarOpen.set(false);
+    await this.router.navigate(['/admin']);
   }
 
   updateSearch(event: Event) {
