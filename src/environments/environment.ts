@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  brotherPrinterMacAddress: 'F4:4E:B4:FE:65:10'
 };
 
 /*

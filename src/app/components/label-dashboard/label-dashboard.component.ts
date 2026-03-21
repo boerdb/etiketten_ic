@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LabelService, LabelTemplate } from '../../services/label'; // LabelTemplate geïmporteerd
 import { AndroidPrinterService } from 'src/app/services/android-printer';
 import { RouterLink } from '@angular/router';
+import { BRLMChannelResult } from '@rdlabo/capacitor-brotherprint';
 
 // Interface voor de gegroepeerde data
 export interface LabelGroup {
@@ -21,6 +22,27 @@ export class LabelDashboardComponent implements OnInit {
   // Services
   labelService = inject(LabelService);
   private printerService = inject(AndroidPrinterService);
+
+  get printerTargetDescription(): string {
+    return this.printerService.getPrinterTargetDescription();
+  }
+
+  get isNativeAndroidRuntime(): boolean {
+    return this.printerService.isNativeAndroidRuntime();
+  }
+
+  get isBrotherPluginLoaded(): boolean {
+    return this.printerService.isBrotherPluginLoaded();
+  }
+
+  get runtimePrinterStatusMessage(): string {
+    return this.printerService.getRuntimeStatusMessage();
+  }
+
+  discoveredPrinters = signal<BRLMChannelResult[]>([]);
+  printerDiscoveryMessage = signal('');
+  isSearchingPrinters = signal(false);
+  isCheckingConfiguredPrinter = signal(false);
 
   // UI State
   isSidebarOpen = signal(false);
@@ -119,8 +141,54 @@ export class LabelDashboardComponent implements OnInit {
     try {
       await this.printerService.printLabelElement(labelElement);
     } catch (err) {
-      alert('Printen mislukt. Controleer de Android printerservice en wifi-verbinding.');
+      alert(this.printerService.getPrintFailureMessage());
     }
   }
 }
+
+  async zoekBluetoothPrinters() {
+    this.isSearchingPrinters.set(true);
+    this.printerDiscoveryMessage.set('Bluetooth printers zoeken...');
+
+    try {
+      const printers = await this.printerService.discoverBluetoothPrinters();
+      this.discoveredPrinters.set(printers);
+      this.printerDiscoveryMessage.set(
+        printers.length > 0
+          ? `${printers.length} Brother printer(s) gevonden.`
+          : 'Geen Brother Bluetooth printers gevonden.'
+      );
+    } catch (error) {
+      this.discoveredPrinters.set([]);
+      this.printerDiscoveryMessage.set(this.toMessage(error, 'Zoeken naar printers is mislukt.'));
+    } finally {
+      this.isSearchingPrinters.set(false);
+    }
+  }
+
+  async controleerGeconfigureerdePrinter() {
+    this.isCheckingConfiguredPrinter.set(true);
+    this.printerDiscoveryMessage.set('Geconfigureerde printer controleren...');
+
+    try {
+      const isAvailable = await this.printerService.isConfiguredPrinterAvailable();
+      this.printerDiscoveryMessage.set(
+        isAvailable
+          ? 'De geconfigureerde Brother printer is bereikbaar.'
+          : 'De geconfigureerde Brother printer is niet bereikbaar.'
+      );
+    } catch (error) {
+      this.printerDiscoveryMessage.set(this.toMessage(error, 'Controleren van de printer is mislukt.'));
+    } finally {
+      this.isCheckingConfiguredPrinter.set(false);
+    }
+  }
+
+  private toMessage(error: unknown, fallback: string): string {
+    if (error instanceof Error && error.message.trim().length > 0) {
+      return error.message;
+    }
+
+    return fallback;
+  }
 }

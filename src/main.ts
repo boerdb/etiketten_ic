@@ -4,7 +4,6 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { provideHttpClient } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
 import { isDevMode } from '@angular/core';
-import { Printer } from '@awesome-cordova-plugins/printer/ngx';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
@@ -12,7 +11,6 @@ import { AppComponent } from './app/app.component';
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Printer,
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),

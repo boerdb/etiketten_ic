@@ -97,6 +97,51 @@
         <button class="print-btn" (click)="boemPrinten()">
           <span>🖨️ Print Label</span>
         </button>
+        <div class="runtime-status" [class.ok]="!isNativeAndroidRuntime || isBrotherPluginLoaded" [class.error]="isNativeAndroidRuntime && !isBrotherPluginLoaded">
+          <div class="runtime-status-line">
+            <strong>Runtime:</strong>
+            <span>{{ isNativeAndroidRuntime ? 'Native Android' : 'Web/PWA' }}</span>
+          </div>
+          <div class="runtime-status-line">
+            <strong>Brother plugin:</strong>
+            <span>{{ isBrotherPluginLoaded ? 'geladen' : 'niet geladen' }}</span>
+          </div>
+          <div class="runtime-status-note">{{ runtimePrinterStatusMessage }}</div>
+        </div>
+        <p class="print-note">{{ printerTargetDescription }}</p>
+
+        @if (isNativeAndroidRuntime && isBrotherPluginLoaded) {
+          <div class="runtime-status">
+            <div class="runtime-status-line">
+              <strong>Bluetooth tools:</strong>
+              <span>Brother diagnose</span>
+            </div>
+            <div class="runtime-status-note">Zoek eerst je printer en neem daarna het MAC-adres over in environment.ts.</div>
+            <div class="runtime-status-line">
+              <button class="print-btn" (click)="zoekBluetoothPrinters()" [disabled]="isSearchingPrinters() || isCheckingConfiguredPrinter()">
+                <span>{{ isSearchingPrinters() ? 'Zoeken...' : 'Zoek Bluetooth printers' }}</span>
+              </button>
+            </div>
+            <div class="runtime-status-line">
+              <button class="print-btn" (click)="controleerGeconfigureerdePrinter()" [disabled]="isSearchingPrinters() || isCheckingConfiguredPrinter()">
+                <span>{{ isCheckingConfiguredPrinter() ? 'Controleren...' : 'Controleer geconfigureerde printer' }}</span>
+              </button>
+            </div>
+            @if (printerDiscoveryMessage()) {
+              <div class="runtime-status-note">{{ printerDiscoveryMessage() }}</div>
+            }
+            @if (discoveredPrinters().length > 0) {
+              <div class="runtime-status-note">
+                @for (printer of discoveredPrinters(); track printer.channelInfo) {
+                  <div>
+                    {{ printer.modelName || 'Brother printer' }}
+                    | MAC: {{ printer.macAddress || printer.channelInfo }}
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
 
       </div>
     } @else {

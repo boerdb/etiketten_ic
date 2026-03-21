@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  brotherPrinterMacAddress: 'F4:4E:B4:FE:65:10'
 };
