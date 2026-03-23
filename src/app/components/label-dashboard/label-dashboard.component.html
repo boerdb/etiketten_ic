@@ -76,13 +76,25 @@
             </div>
 
             <div class="label-row-middle">
-              <div class="col">
-                <div>Batch: <span class="line"></span></div>
-                <div>THT: <span class="data-text">{{ thtDate }}</span></div>
+              <div class="meta-row">
+                <div class="meta-item meta-item-wide">
+                  <span class="meta-label">Batch:</span>
+                  <span class="line"></span>
+                </div>
+                <div class="meta-item meta-item-right">
+                  <span class="meta-label">Tijd:</span>
+                  <span class="data-text">{{ currentTime }}</span>
+                </div>
               </div>
-              <div class="col text-right">
-                <div>Tijd: <span class="data-text">{{ currentTime }}</span></div>
-                <div>Datum: <span class="data-text">{{ currentDate }}</span></div>
+              <div class="meta-row">
+                <div class="meta-item meta-item-wide">
+                  <span class="meta-label">THT:</span>
+                  <span class="data-text">{{ thtDate }}</span>
+                </div>
+                <div class="meta-item meta-item-right">
+                  <span class="meta-label">Datum:</span>
+                  <span class="data-text">{{ currentDate }}</span>
+                </div>
               </div>
             </div>
 
@@ -150,7 +162,7 @@
         <p class="placeholder-text">Selecteer medicatie in de lijst om een label te genereren</p>
         <div class="landing-footer">
           &copy; 2026 ontwikkeld door Clinical Vision <br>
-          Versie 1.01 (Build mrt-2026)
+          Versie 1.2.0 (Build mrt-2026)
         </div>
       </div>
     }

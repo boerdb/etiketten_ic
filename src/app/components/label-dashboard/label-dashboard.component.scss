@@ -188,7 +188,7 @@
 
 .landing-footer {
   position: absolute;
-  bottom: 20px;
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px));
   font-size: 0.8rem;
   color: #aaa;
   text-align: center;
@@ -416,23 +416,51 @@
 
 .label-row-middle {
   display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
   font-weight: bold;
   margin-top: 10px;
+}
 
-  .col { display: flex; flex-direction: column; gap: 4px; }
-  .text-right { text-align: right; }
+.meta-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.95fr);
+  align-items: end;
+  column-gap: 14px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+}
+
+.meta-item-wide {
+  overflow: hidden;
+}
+
+.meta-item-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.meta-label {
+  white-space: nowrap;
 }
 
 .data-text {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .line {
   border-bottom: 1px solid black;
   display: inline-block;
-  min-width: 70px;
+  flex: 1;
+  min-width: 60px;
   height: 14px;
 }
 
