@@ -1,6 +1,7 @@
 import { addIcons } from 'ionicons';
 import {
   arrowBackOutline,
+  homeOutline,
   pencilOutline,
   trashOutline,
   saveOutline,
@@ -15,6 +16,7 @@ import {
 export function registerIcons() {
   addIcons({
     'arrow-back-outline': arrowBackOutline,
+    'home-outline': homeOutline,
     'pencil-outline': pencilOutline,
     'trash-outline': trashOutline,
     'save-outline': saveOutline,

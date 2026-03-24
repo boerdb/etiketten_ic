@@ -10,7 +10,9 @@
   <div class="sidebar-header">
     <div class="sidebar-title-bar">
       <h3>IC Labels</h3>
-      <button class="home-btn" (click)="goHome()" title="Naar startscherm">🏠</button>
+        <button class="home-btn" type="button" (click)="goHome()" title="Naar startscherm" aria-label="Naar startscherm">
+          <ion-icon name="home-outline"></ion-icon>
+        </button>
     </div>
     <input type="text" placeholder="Zoek medicatie..." (input)="updateSearch($event)" class="search-input">
   </div>
@@ -162,7 +164,7 @@
         <p class="placeholder-text">Selecteer medicatie in de lijst om een label te genereren</p>
         <div class="landing-footer">
           &copy; 2026 ontwikkeld door Clinical Vision <br>
-          Versie 1.2.0 (Build mrt-2026)
+          Versie 1.2.2 (Build mrt-2026)
         </div>
       </div>
     }

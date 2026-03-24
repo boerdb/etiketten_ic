@@ -1,5 +1,6 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core'; // computed toegevoegd
 import { CommonModule } from '@angular/common';
+import { IonIcon } from '@ionic/angular/standalone';
 import { LabelService, LabelTemplate } from '../../services/label'; // LabelTemplate geïmporteerd
 import { AndroidPrinterService } from 'src/app/services/android-printer';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ export interface LabelGroup {
 @Component({
   selector: 'app-label-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IonIcon],
   templateUrl: './label-dashboard.component.html',
   styleUrls: ['./label-dashboard.component.scss']
 })
