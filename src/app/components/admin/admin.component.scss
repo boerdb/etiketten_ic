@@ -17,6 +17,10 @@
   gap: 20px;
 }
 
+.admin-title {
+  text-align: center;
+}
+
 .back-btn {
   background: transparent;
   color: var(--ion-color-primary);
@@ -28,6 +32,24 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.logout-btn {
+  background: #2a2a2a;
+  color: #f2f2f2;
+  border: 1px solid #555;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .admin-card, .list-card {

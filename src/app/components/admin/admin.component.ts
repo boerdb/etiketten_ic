@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LabelService, LabelTemplate } from '../../services/label';
 import { Router } from '@angular/router';
 import { IonIcon } from "@ionic/angular/standalone";
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-admin',
@@ -15,6 +16,7 @@ import { IonIcon } from "@ionic/angular/standalone";
 export class AdminComponent implements OnInit {
   labelService = inject(LabelService);
   private router = inject(Router);
+  private auth = inject(Auth);
 
   // Standaardwaarden voor een leeg formulier
   private readonly defaultForm: Partial<LabelTemplate> = {
@@ -115,6 +117,11 @@ export class AdminComponent implements OnInit {
   }
 
   async goBackToDashboard() {
+    await this.router.navigate(['/']);
+  }
+
+  async logout(): Promise<void> {
+    this.auth.logout();
     await this.router.navigate(['/']);
   }
 
